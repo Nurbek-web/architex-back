@@ -5,9 +5,12 @@ import AWS from "aws-sdk";
 import globalRouter from "./global-router";
 import { logger } from "./logger";
 import Replicate from "replicate";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(cors());
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
