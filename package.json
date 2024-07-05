@@ -28,6 +28,7 @@
     "session": "^0.1.0"
   },
   "devDependencies": {
+    "@gradio/client": "^1.2.1",
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.18.0",
     "@types/jest": "^29.5.12",

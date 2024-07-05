@@ -6,6 +6,7 @@ import globalRouter from "./global-router";
 import { logger } from "./logger";
 import Replicate from "replicate";
 import cors from "cors";
+const dynamic = new Function("modulePath", "return import(modulePath)");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -87,6 +88,21 @@ app.post(
     }
   }
 );
+
+app.post("/get-plan", async (req: any, res: any) => {
+  const { prompt } = req.body;
+  const { Client } = await dynamic("@gradio/client");
+
+  const app = await Client.connect(
+    "actuallyastarfish/muzammil-eds-stable-diffusion-v1.4-floorplans-generator-v1"
+  );
+  const result = await app.predict("/predict", {
+    param_0: "SOME PROMPT",
+  });
+
+  console.log(result);
+  res.status(200).json(result);
+});
 
 app.listen(PORT, () => {
   console.log(`Server runs at http://localhost:${PORT}`);
